@@ -1,0 +1,14 @@
+{
+  "name": "DevSecOps Lab",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {},
+  "postCreateCommand": "pip install -r requirements-dev.txt && curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/main/scripts/install.sh | sh -s -- -b /usr/local/bin && pre-commit install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "github.vscode-github-actions"
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+name: CI Pipeline（不完整版）
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 功能測試
+      - name: Run tests
+        run: python -m pytest tests/ -v
+
+      # ❓ 這裡缺少了什麼安全步驟？
+      # 學員任務：對照 security-complete.yml，找出哪些安全閘門沒有加入
+      #
+      # 提示：
+      # 1. 有沒有掃描程式碼裡是否藏了密鑰？
+      # 2. 有沒有檢查 requirements.txt 裡的套件是否有已知 CVE？
+      # 3. 有沒有做靜態程式碼分析（SAST）找出程式碼漏洞？

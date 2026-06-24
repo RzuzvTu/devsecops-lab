@@ -1,0 +1,11 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "課程教學用假資料，排除誤報"
+regexes = [
+  '''EXAMPLE''',
+  '''AKIAIOSFODNN7EXAMPLE''',
+  '''wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY''',
+  '''super-secret-jwt-key-do-not-share''',
+]

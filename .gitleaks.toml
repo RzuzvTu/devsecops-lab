@@ -3,6 +3,14 @@ title = "devsecops-lab gitleaks config"
 [extend]
 useDefault = true
 
+# 對應投影片「SECRET SCAN · TWO MODES」：
+# detect 模式（gitleaks detect --source .）掃完整 git history，protect 模式（pre-commit 觸發）
+# 只掃這次要 commit 的 diff -- app/config.py 裡的 AWS key 是舊 commit 就存在的，兩種模式都會掃到，
+# 這裡才需要 allowlist 把它排除，不然每次掃描都會誤報「有洩漏」。
+#
+# 這兩條字串是 AWS 官方文件範例 key（AKIAIOSFODNN7EXAMPLE），刻意留在 app/config.py 當教材用，
+# 不是真的洩漏 -- allowlist 用「排除這兩個具體字串」而不是「排除整個檔案/路徑」，
+# 這樣萬一有人真的把別的 secret 貼進同一個檔案，仍然會被抓到。
 [allowlist]
   description = "Allowlist for known test credentials"
   regexes = [

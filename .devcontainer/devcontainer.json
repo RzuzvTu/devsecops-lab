@@ -7,6 +7,7 @@
       "version": "20"
     }
   },
+  // 這裡預先裝好 gitleaks/pip-audit/semgrep/pre-commit，是為了上課節省安裝等待時間
   "postCreateCommand": "pip install -r requirements.txt pip-audit semgrep pre-commit && curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/main/scripts/install.sh | sh -s -- -b /usr/local/bin",
   "customizations": {
     "vscode": {

@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-pip install --upgrade -r requirements.txt pip-audit semgrep pre-commit
+pip install -r requirements.txt
+
+# pip-audit / semgrep / pre-commit 改用 pipx 個別裝進獨立的虛擬環境。
+# 直接 `pip install --upgrade` 在共用環境下會被這個 Codespace 底層已預裝的其他套件
+# （例如 mcp / jsonschema / pydantic 之類）卡住相依性解析，pip 為了不動到既有套件，
+# 會一路往舊版本回退，導致「明明加了 --upgrade 還是裝到舊版」。pipx 讓每個工具各自
+# 用自己的 venv，不跟其他套件共用相依性，就不會再發生這個回退問題。
+python3 -m pip install --user --quiet --upgrade pipx
+export PATH="$HOME/.local/bin:$PATH"
+python3 -m pipx ensurepath >/dev/null 2>&1 || true
+
+for tool in pip-audit semgrep pre-commit; do
+  python3 -m pipx install --force "$tool"
+done
 
 GITLEAKS_VERSION="8.18.2"
 ARCH="$(dpkg --print-architecture)"
